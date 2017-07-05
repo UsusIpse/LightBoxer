@@ -169,10 +169,32 @@ img {
   background-size: cover;
 }
 #bp_container #bp_vid {
-
+  width:70%;
+  background-color:red;
+  height:60%;
+  position:relative;
   
 }
-
+#bp_container #lightboxer-comments{
+	width:29%;
+	background-color:blue;
+	height:60%;
+	position:relative;
+	float:right;
+}
+#bp_container #lightboxer-browser{	
+	width:100%;
+	height:39%;
+	background-color:green;
+	position:absolute;
+	bottom:0px;
+}
+#bp_container #lightboxer-browser #video_container .vid{	
+	float:left;
+	max-height:50%;
+	padding:0px 10px;
+	margin:0px auto;
+}
 
 .vid:before, .vid:after{
   content: '';

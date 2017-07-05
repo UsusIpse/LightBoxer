@@ -74,7 +74,11 @@
 	shufback,
 	shuffor,
 	// disable close on shuffle hover
-	toshuff = false;
+	toshuff = false,
+	//comment sidebar
+	commentSideBar,
+	//thumb browser
+	thumbBrowser;
 	
 
   global.BigPicture = function(options) {
@@ -146,6 +150,9 @@
 
     // add container to page
     container[appendEl](displayElement);
+	container[appendEl](commentSideBar);
+    container[appendEl](thumbBrowser);
+    
     doc.body[appendEl](container);
   };
 
@@ -218,6 +225,21 @@
     changeCSS(iframeSiteVid, 'border:0px;height:100%;width:100%');
     iframeContainer[appendEl](iframeSiteVid);
 
+	
+	//create comment section
+	commentSideBar = doc[createEl]('DIV');
+	commentSideBar.id = 'lightboxer-comments';
+	var comms = document.getElementById("comments");
+	commentSideBar[appendEl](comms);
+	
+	//create thumb browser
+	thumbBrowser = doc[createEl]('DIV');
+	thumbBrowser.id= 'lightboxer-browser';
+	var vids = document.getElementById("video_container");
+	thumbBrowser[appendEl](vids);
+	
+	
+	
     // display image bindings for image load and error
     displayImage.onload = open;
     displayImage.onerror = open.bind(null, 'image');

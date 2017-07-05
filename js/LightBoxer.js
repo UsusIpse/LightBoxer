@@ -1,4 +1,4 @@
-console.log('raWR');
+console.log('DC 001');
 
 jQuery( document ).ready( function( $ ) {
 	
@@ -40,5 +40,4 @@ jQuery( document ).ready( function( $ ) {
 
 
 });
-
- // BRANCH DC 001 TEST 
+ 
