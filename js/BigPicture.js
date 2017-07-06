@@ -227,16 +227,19 @@
 
 	
 	//create comment section
+	
 	commentSideBar = doc[createEl]('DIV');
 	commentSideBar.id = 'lightboxer-comments';
-	var comms = document.getElementById("comments");
-	commentSideBar[appendEl](comms);
+	var cloneMe = document.getElementById("comments");
+	var theClone = cloneMe.cloneNode(true);
+	commentSideBar[appendEl](theClone);
 	
 	//create thumb browser
 	thumbBrowser = doc[createEl]('DIV');
 	thumbBrowser.id= 'lightboxer-browser';
-	var vids = document.getElementById("video_container");
-	thumbBrowser[appendEl](vids);
+	cloneMe = document.getElementById("video_container");
+	theClone = cloneMe.cloneNode(true);
+	thumbBrowser[appendEl](theClone);
 	
 	
 	
