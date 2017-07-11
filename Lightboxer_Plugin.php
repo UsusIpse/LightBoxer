@@ -140,7 +140,7 @@ class Lightboxer_Plugin extends Lightboxer_LifeCycle {
 					'name' => __('LightBoxers'),
 					'singular_name' => __('LightBoxer')
 				),
-				'supports' => array('title', 'excerpt', 'comments'),
+				'supports' => array('title', 'editor', 'comments'),
 				'public' => true,
 				'has_archive' => true,
 			)		

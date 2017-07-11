@@ -228,8 +228,12 @@
 		commentSideBar = doc[createEl]('DIV');
 		commentSideBar.id = 'lightboxer-comments';
 		var cloneMe = document.getElementById("comments");
-		var theClone = cloneMe.cloneNode(true);
-		commentSideBar[appendEl](theClone);
+		if(typeof(cloneMe) != 'undefined' && cloneMe != null ){
+			var theClone = cloneMe.cloneNode(true);
+			commentSideBar[appendEl](theClone);
+		}
+		
+		
 
 		//create thumb browser
 		thumbBrowser = doc[createEl]('DIV');

@@ -171,20 +171,20 @@ img {
 #bp_container #bp_vid {
   width:70%;
   background-color:red;
-  height:60%;
+  height:70%;
   position:relative;
   
 }
 #bp_container #lightboxer-comments{
 	width:29%;
 	background-color:blue;
-	height:60%;
+	height:70%;
 	position:relative;
 	float:right;
 }
 #bp_container #lightboxer-browser{	
 	width:100%;
-	height:39%;
+	height:29%;
 	background-color:green;
 	position:absolute;
 	bottom:0px;
@@ -253,7 +253,7 @@ img {
 }
 #trackback, #trackforward {
 	position:relative;
-	height:62%;
+	height:70%;
 	width:150px;
 	background-color:blue;
 	opacity:0;
