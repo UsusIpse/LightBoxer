@@ -3,18 +3,39 @@ console.log('DC 001');
 jQuery( document ).ready( function( $ ) {
 	
 	var theLinks = [];
-	$('#video_container .vid').each(function(i, e){
-		theLinks.push(e.getAttribute('vidSrc'));
-		$(e).attr('name', i);
-	});
+	
 	
 	console.log(theLinks);
     function setClickHandler(id, fn) {		
       document.getElementById(id).onclick = fn;
     }
+/*
+	setClickHandler('image_container', function(e) {
+      e.target.tagName === 'IMG' && BigPicture({
+        el: e.target,
+        imgSrc: e.target.src.replace('_thumb', '')
+      });
+    });
+*/
+    setClickHandler('local_image_container', function(e) {
+		theLinks = [];
+		$('#local_image_container img').each(function(i, e){
+			theLinks.push(e.getAttribute('src'));
+			$(e).attr('name', i);
+		});
+      (e.target.tagName === 'IMG' || e.target.className === 'background-image') &&
+        BigPicture({
+          el: e.target
+        });
+    });
 
 
     setClickHandler('video_container', function(e) {
+		theLinks = [];
+		$('#video_container .vid').each(function(i, e){
+			theLinks.push(e.getAttribute('vidSrc'));
+			$(e).attr('name', i);
+		});
       var className = e.target.className;
       ~className.indexOf('htmlvid') &&
         BigPicture({

@@ -138,6 +138,7 @@
 			displayElement = displayVideo;
 			displayElement.src = options.vidSrc;
 			checkVid();
+			createThumbBrowser("video_container");
 		}
 		// local image / background image already loaded on page
 		else {
@@ -145,6 +146,7 @@
 			// get img source or element background image
 			displayElement.src = el.tagName === 'IMG' ? el.src :
 				global.getComputedStyle(el).backgroundImage.replace(/^url|[\(|\)|'|"]/g, '');
+				createThumbBrowser("local_image_container");
 		}
 
 		// add container to page
@@ -172,15 +174,16 @@
 		// add style
 		// if you want to tweak, grab from doc head & run through beautifier
 		var style = doc[createEl]('STYLE');
-		style[htmlInner] = '#bp_caption,#bp_container{bottom:0;left:0;right:0;position:fixed;opacity:0}#bp_container>*,.bp-x,#bp_loader{position:absolute;right:0}#bp_container{top:0;z-index:9999;background:rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:opacity .35s}#bp_loader{top:0;left:0;bottom:0;display:-webkit-flex;display:flex;margin:0;cursor:wait;z-index:9}#bp_loader svg{width:40%;max-height:40%;margin:auto;' + webkitify('animation:', 'ldr .7s infinite linear;') + '}' + webkitifyKeyframes('keyframes ldr{to{' + webkitify('transform:', 'rotate(1turn);') + '}}') + '#bp_container img,#bp_sv,#bp_vid{max-height:96%;max-width:96%;top:0;bottom:0;left:0;margin:auto;box-shadow:0 0 3em rgba(0,0,0,.4);z-index:-1}#bp_sv{width:171vh}#bp_caption{font-size:.9em;padding:1.3em;background:rgba(15,15,15,.94);color:#fff;text-align:center;transition:opacity .3s}.bp-x{font-family:Arial;top:0;cursor:pointer;opacity:.8;font-size:3em;padding:0 .3em;color:#fff;background:transparent;border:0;text-shadow:0 0 2px #000}#bp_caption .bp-x{left:2%;top:auto;right:auto;bottom:100%;padding:0 .6em;background:#d74040;border-radius:2px 2px 0 0;font-size:2.3em;text-shadow:none}.bp-x:hover,.bp-x:focus{opacity:1}.bp-x:active{outline:0}@media (max-aspect-ratio:9/5){#bp_sv{height:53vw}}';
+		style[htmlInner] = '#bp_caption,#bp_container{bottom:0;left:0;right:0;position:fixed;opacity:0}#bp_container>*,.bp-x,#bp_loader{position:absolute;right:0}#bp_container{top:0;z-index:9000;background:rgba(0,0,0,.7);opacity:0;pointer-events:none;transition:opacity .35s}#bp_loader{top:0;left:0;bottom:0;display:-webkit-flex;display:flex;margin:0;cursor:wait;z-index:9}#bp_loader svg{width:40%;max-height:40%;margin:auto;' + webkitify('animation:', 'ldr .7s infinite linear;') + '}' + webkitifyKeyframes('keyframes ldr{to{' + webkitify('transform:', 'rotate(1turn);') + '}}') + '#bp_container img,#bp_sv,#bp_vid{max-height:96%;max-width:96%;top:0;bottom:0;left:0;margin:auto;box-shadow:0 0 3em rgba(0,0,0,.4);z-index:-1}#bp_sv{width:171vh}#bp_caption{font-size:.9em;padding:1.3em;background:rgba(15,15,15,.94);color:#fff;text-align:center;transition:opacity .3s}.bp-x{font-family:Arial;top:0;cursor:pointer;opacity:.8;font-size:3em;padding:0 .3em;color:#fff;background-color:green;border:0;text-shadow:0 0 2px #000; z-index:9999;}#bp_caption .bp-x{left:2%;top:auto;right:auto;bottom:100%;padding:0 .6em;background:#d74040;border-radius:2px 2px 0 0;font-size:2.3em;text-shadow:none}.bp-x:hover,.bp-x:focus{opacity:1}.bp-x:active{outline:0}@media (max-aspect-ratio:9/5){#bp_sv{height:53vw}}';
 		doc.head[appendEl](style);
 
 		// create container element
 		container = doc[createEl]('DIV');
 		container.id = 'bp_container';
-		container.onclick = close;
+		//container.onclick = close;
 		closeButton = createCloseButton();
 		container[appendEl](closeButton);
+		closeButton.onclick = close;
 
 		// create display image element
 		displayImage = doc[createEl]('IMG');
@@ -235,12 +238,11 @@
 		
 		
 
-		//create thumb browser
-		thumbBrowser = doc[createEl]('DIV');
-		thumbBrowser.id = 'lightboxer-browser';
-		cloneMe = document.getElementById("video_container");
-		theClone = cloneMe.cloneNode(true);
-		thumbBrowser[appendEl](theClone);
+		
+		
+		
+		
+		
 
 		
 		
@@ -249,13 +251,10 @@
 		
 		//cheat and use jquery! each is needed here
 		// click to change vid src
-		jQuery(theClone).find('.vid').each(function () {
-			
-			jQuery(this).on('click', function (){
-				displayElement.src = jQuery(this).attr('vidsrc');
-			});
-			
-		});
+		
+		//  need to check what container we are using
+		//  this is done after the initialization
+		
 
 		// display image bindings for image load and error
 		displayImage.onload = open;
@@ -411,6 +410,34 @@
 			changeCSS(displayElement, webkitify('transition:', 'transform .35s;') + webkitify('transform:', 'none;'));
 			captionContent && timeout(changeCSS.bind(null, caption, 'opacity:1'), 250);
 		}, 60);
+	}
+	function createThumbBrowser(cont){
+		//create thumb browser
+		thumbBrowser = doc[createEl]('DIV');
+		thumbBrowser.id = 'lightboxer-browser';
+		//console.log(el.tagName);
+		cloneMe = document.getElementById(cont);
+		if(typeof(cloneMe) != 'undefined' && cloneMe != null ){
+			theClone = cloneMe.cloneNode(true);
+			thumbBrowser[appendEl](theClone);
+		}
+		if(cont==='video_container'){
+			jQuery(theClone).find('.vid').each(function () {			
+				jQuery(this).on('click', function (){
+					displayElement.src = jQuery(this).attr('vidsrc');
+					console.log('thumb cliccked');
+				});			
+			});
+		}
+		else{
+			jQuery(theClone).find('img').each(function () {			
+				jQuery(this).on('click', function (){
+					displayElement.src = jQuery(this).attr('src');
+					console.log('thumb cliccked');
+				});			
+			});
+		}
+		
 	}
 	function trackForward(e) {
 		theNum++;
